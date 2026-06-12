@@ -1,5 +1,5 @@
 const subCategories =
-require('../models/subCategoryModel')
+require('../models/subcategoryModel')
 
 exports.addSubCategory = async (req, res) => {
 
