@@ -51,6 +51,10 @@ export const updateProductAPI = async (id,reqBody,reqHeader
     )
 }
 
+export const deleteProductAPI = async (id, reqHeader) => {
+    return await commonAPI("DELETE", `${BASE_URL}/product/${id}`, {}, reqHeader)
+}
+
 
 
 export const addWishlistAPI = async (reqBody,reqHeader) => {

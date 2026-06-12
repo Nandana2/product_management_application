@@ -1,13 +1,14 @@
 import React from 'react'
-import { FaHeart } from "react-icons/fa"
+import { FaHeart, FaTrash } from "react-icons/fa"
 import { Link } from 'react-router-dom'
 import { BASE_URL } from '../services/baseURL'
-import { addWishlistAPI } from '../services/allAPI'
+import { addWishlistAPI, deleteProductAPI } from '../services/allAPI'
 import { toast } from 'react-toastify'
 
 function ProductCard({
   product,
-  onWishlistUpdated
+  onWishlistUpdated,
+  onProductDeleted
 }) {
 
   const imageUrl =
@@ -49,12 +50,51 @@ function ProductCard({
     }
   };
 
+  const handleDeleteProduct = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      toast.warning("Please login to delete products");
+      return;
+    }
+
+    if (!window.confirm("Are you sure you want to delete this product?")) {
+      return;
+    }
+
+    try {
+      const reqHeader = {
+        "Authorization": `Bearer ${token}`
+      };
+
+      const result = await deleteProductAPI(product._id, reqHeader);
+
+      if (result.status === 200) {
+        toast.success("Product deleted successfully");
+        if (onProductDeleted) {
+          onProductDeleted();
+        }
+      } else {
+        toast.error("Failed to delete product");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("An error occurred");
+    }
+  };
+
   return (
 
     <div className="product-card">
 
       <div className="wishlist" onClick={handleAddToWishlist}>
         <FaHeart />
+      </div>
+
+      <div className="delete-btn" onClick={handleDeleteProduct} style={{ position: 'absolute', left: '15px', top: '15px', background: '#ff4d4d', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', cursor: 'pointer', zIndex: 5, transition: 'all 0.3s ease' }}>
+        <FaTrash size={14} />
       </div>
 
       <Link

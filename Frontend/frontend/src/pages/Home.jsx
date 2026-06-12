@@ -188,6 +188,7 @@ function Home() {
                     key={product._id}
                     product={product}
                     onWishlistUpdated={fetchWishlistCount}
+                    onProductDeleted={() => fetchProducts()}
                   />
 
                 ))
