@@ -1,7 +1,6 @@
 const subCategories =
 require('../models/subCategoryModel')
 
-// Add Sub Category
 exports.addSubCategory = async (req, res) => {
 
   try {
@@ -12,10 +11,7 @@ exports.addSubCategory = async (req, res) => {
     } = req.body
 
     const newSubCategory =
-      new subCategories({
-        categoryId,
-        subCategoryName
-      })
+      new subCategories({ categoryId, subCategoryName })
 
     await newSubCategory.save()
 
@@ -27,14 +23,13 @@ exports.addSubCategory = async (req, res) => {
 
 }
 
-// Get Sub Categories
 exports.getSubCategories = async (req, res) => {
 
   try {
 
     const result =
       await subCategories.find()
-        .populate('categoryId')
+       .populate('categoryId')
 
     res.status(200).json(result)
 

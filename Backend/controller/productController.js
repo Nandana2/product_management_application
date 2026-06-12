@@ -1,76 +1,80 @@
 const products =
 require('../models/productModel')
 
-// Add Product
 exports.addProduct = async (req, res) => {
 
   try {
 
     const {
       title,
-      description,
       subCategory,
+      description,
       variants
     } = req.body
 
-    const images =
-      req.files.map(file => file.filename)
+    const images = req.files
+      ? req.files.map(file => file.filename)
+      : []
 
-    const newProduct =
-      new products({
-        title,
-        description,
-        subCategory,
-        image: images,
-        variants: JSON.parse(variants)
-      })
+    const newProduct = new products({
+      title,
+      subCategory,
+      description,
+      variants: JSON.parse(variants),
+      image: images
+    })
 
     await newProduct.save()
 
     res.status(200).json(newProduct)
 
   } catch (err) {
-    res.status(500).json(err)
-  }
+
+  console.log(err)
+
+  res.status(500).json({
+    message: err.message
+  })
 
 }
 
-// Get Products
+}
+
 exports.getProducts = async (req, res) => {
 
   try {
 
-    const search =
-      req.query.search || ""
+    const { search, subCategory, page = 1, limit = 10 } = req.query
 
-    const page =
-      Number(req.query.page) || 1
+    const filter = {}
 
-    const limit = 6
+    if (search) {
+      filter.title = { $regex: search, $options: 'i' }
+    }
 
-    const skip =
-      (page - 1) * limit
+    if (subCategory) {
+      if (subCategory.includes(',')) {
+        filter.subCategory = { $in: subCategory.split(',') }
+      } else {
+        filter.subCategory = subCategory
+      }
+    }
 
-    const result =
-      await products.find({
+    const pageNum = parseInt(page)
+    const limitNum = parseInt(limit)
 
-        title: {
-          $regex: search,
-          $options: 'i'
-        }
+    const total = await products.countDocuments(filter)
 
-      })
+    const productList = await products.find(filter)
       .populate('subCategory')
-      .skip(skip)
-      .limit(limit)
-
-    const total =
-      await products.countDocuments()
+      .skip((pageNum - 1) * limitNum)
+      .limit(limitNum)
 
     res.status(200).json({
-      products: result,
-      totalPages:
-        Math.ceil(total / limit)
+      total,
+      page: pageNum,
+      pages: Math.ceil(total / limitNum),
+      data: productList
     })
 
   } catch (err) {
@@ -79,7 +83,6 @@ exports.getProducts = async (req, res) => {
 
 }
 
-// Get Single Product
 exports.getSingleProduct = async (req, res) => {
 
   try {
@@ -87,8 +90,7 @@ exports.getSingleProduct = async (req, res) => {
     const { id } = req.params
 
     const product =
-      await products.findById(id)
-      .populate('subCategory')
+      await products.findById(id).populate('subCategory')
 
     res.status(200).json(product)
 
@@ -98,7 +100,6 @@ exports.getSingleProduct = async (req, res) => {
 
 }
 
-// Update Product
 exports.updateProduct = async (req, res) => {
 
   try {

@@ -1,7 +1,6 @@
 const wishlist =
 require('../models/whishlistModel')
 
-// Add Wishlist
 exports.addWishlist = async (req, res) => {
 
   try {
@@ -9,21 +8,14 @@ exports.addWishlist = async (req, res) => {
     const { productId } = req.body
 
     const existingItem =
-      await wishlist.findOne({
-        userId: req.userId,
-        productId
-      })
+      await wishlist.findOne({ userId: req.userId,  productId})
 
     if (existingItem) {
-      return res.status(406)
-      .json("Already in wishlist")
+      return res.status(406).json("Already in wishlist")
     }
 
     const newWishlistItem =
-      new wishlist({
-        userId: req.userId,
-        productId
-      })
+      new wishlist({ userId: req.userId, productId })
 
     await newWishlistItem.save()
 
@@ -35,16 +27,12 @@ exports.addWishlist = async (req, res) => {
 
 }
 
-// Get Wishlist
 exports.getWishlist = async (req, res) => {
 
   try {
 
     const result =
-      await wishlist.find({
-        userId: req.userId
-      })
-      .populate('productId')
+      await wishlist.find({ userId: req.userId }) .populate('productId')
 
     res.status(200).json(result)
 
@@ -54,7 +42,6 @@ exports.getWishlist = async (req, res) => {
 
 }
 
-// Remove Wishlist
 exports.removeWishlist = async (req, res) => {
 
   try {

@@ -1,5 +1,5 @@
 
-// Some Wi-Fi networks have DNS issues resolving MongoDB Atlas SRV records.
+// Fix for DNS resolution issues on restricted Wi-Fi networks
 
 const dns = require('dns')
 

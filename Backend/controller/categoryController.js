@@ -1,6 +1,4 @@
 const categories = require('../models/categoryModel')
-
-// Add Category
 exports.addCategory = async (req, res) => {
 
   try {
@@ -23,8 +21,6 @@ exports.addCategory = async (req, res) => {
   }
 
 }
-
-// Get Categories
 exports.getCategories = async (req, res) => {
 
   try {

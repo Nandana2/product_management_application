@@ -1,32 +1,39 @@
 # Product Management Application
 
-## Overview
+A full-stack MERN application for managing products, categories, and user wishlists. Built to practice real-world CRUD operations, authentication, file uploads, and database relationships.
 
-This is a MERN Stack (MongoDB, Express.js, React.js, Node.js) application for managing products, categories, subcategories, and wishlists.
+## Features
 
-## Project Structure
-
-Product-Management-App/
-
-├── Backend/
-├── Frontend/
-├── README.md
-└── .gitignore
-```
+* User Registration & Login (JWT Authentication)
+* Product Management (Add, Edit, View Products)
+* Multiple Product Variants (RAM, Price, Quantity)
+* Category & Subcategory Management
+* Wishlist Functionality
+* Product Search & Pagination
+* Image Upload with Multer
+* Responsive UI with Toast Notifications
 
 ## Tech Stack
 
-### Frontend
+**Frontend**
 
-* React.js
-* Vite
+* React.js (Vite)
+* React Router DOM
+* Axios
+* React Bootstrap
+* React Toastify
 
-### Backend
+**Backend**
 
 * Node.js
 * Express.js
+* MongoDB
+* Mongoose
+* Multer
+* JWT
+* bcryptjs
 
-## Getting Started
+## Setup
 
 ### Backend
 
@@ -39,11 +46,11 @@ npm start
 ### Frontend
 
 ```bash
-cd Frontend
+cd Frontend/frontend
 npm install
 npm run dev
 ```
 
-## Status
+## Author
 
-Initial project setup completed.
+Developed as a MERN Stack project to strengthen full-stack development skills, including authentication, file uploads, CRUD operations, and API integration.

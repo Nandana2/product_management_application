@@ -1,8 +1,6 @@
 const users = require('../models/userModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
-// Register
 exports.register = async (req, res) => {
   try {
 
@@ -30,8 +28,6 @@ exports.register = async (req, res) => {
     res.status(500).json(err)
   }
 }
-
-// Login
 exports.login = async (req, res) => {
 
   try {
