@@ -4,7 +4,7 @@ const router = express.Router()
 
 const authController = require('../controller/authController')
 const categoryController = require('../controller/categoryController')
-const subCategoryController = require('../controller/subcategoryController')
+const subCategoryController = require('../controller/subCategoryController')
 const productController = require('../controller/productController')
 const wishlistController = require('../controller/wishlistController')
 
