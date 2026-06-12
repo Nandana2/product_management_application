@@ -51,6 +51,11 @@ npm install
 npm run dev
 ```
 
+##NOTE:
+
+Product images are currently stored in the local uploads/ folder. For production deployments, a cloud storage solution such as Cloudinary is recommended for better scalability and reliability.
+
+
 ## Author
 
 Developed as a MERN Stack project to strengthen full-stack development skills, including authentication, file uploads, CRUD operations, and API integration.
